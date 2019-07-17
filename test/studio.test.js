@@ -44,7 +44,7 @@ describe('app routes', () => {
       .then(res => {
         const studiosJSON = JSON.parse(JSON.stringify(studios));        
         studiosJSON.forEach(studio => {
-          expect(res.body).toContainEqual(studio);
+          expect(res.body).toContainEqual({ name: studio.name, _id: studio._id });
         });
       });
   });
