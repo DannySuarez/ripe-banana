@@ -21,7 +21,7 @@ describe('app routes', () => {
 
   it('can create a studio', () => {
     return request(app)
-      .post('/api/v1/studio')
+      .post('/api/v1/studios')
       .send({ name: 'studio one' })
       .then((res => {
         expect(res.body).toEqual({
@@ -40,7 +40,7 @@ describe('app routes', () => {
     ]);
 
     return request(app)
-      .get('/api/v1/studio')
+      .get('/api/v1/studios')
       .then(res => {
         const studiosJSON = JSON.parse(JSON.stringify(studios));        
         studiosJSON.forEach(studio => {
@@ -48,5 +48,9 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('can get studio by an ID', async(){
+    
+  })
 
 });
