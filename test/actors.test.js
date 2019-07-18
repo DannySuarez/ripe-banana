@@ -32,7 +32,7 @@ describe('app routes', () => {
       }));
   });
 
-  it('can get studios', async() => {
+  it('can get actors', async() => {
     const actors = await Actor.create([
       { name: 'sylvester stallone' },
       { name: 'antonio banderas' },
