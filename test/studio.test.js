@@ -5,6 +5,7 @@ const app = require('../lib/app');
 const connect = require('../lib/utils/connect');
 const mongoose = require('mongoose');
 const Studio = require('../lib/models/Studio');
+const Actor = require('../lib/models/Actor');
 const Film = require('../lib/models/Film');
 
 describe('app routes', () => {
@@ -50,11 +51,37 @@ describe('app routes', () => {
       });
   });
 
-  // it('can get studio by an ID', async() => {
-  //   const studio = await Studio.create([
-  //     { name: 'silly studio' }
-  //   ]);
-  //   const 
-  // })
+  it('can get studio by an ID', async() => {
+    const studios = await Studio.create([
+      { name: 'test studio' },
+      { name: 'test studio two' }
+    ]);
+    const actor = await Actor.create(
+      { name: 'Jason Stathom' }
+    );
+    const film = await Film.create({
+      title: 'The Transporter',
+      studio: studios[0]._id,
+      released: 2002,
+      cast: [{
+        role: 'Main',
+        actor: actor._id
+      }]
+    });
+
+    return request(app)
+      .get(`/api/v1/studios/${studios[0]._id}`)
+      .then((res => {
+        console.log(res.body);
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: studios[0].name,
+          films: [{
+            _id: film._id.toString(),
+            title: film.title
+          }]
+        });
+      }));
+  });
 
 });
