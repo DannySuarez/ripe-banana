@@ -36,7 +36,8 @@ describe('app routes', () => {
   it('can get a reviewer', async() => {
     const reviewers = await Reviewer.create([
       { name: 'danny', company: 'self' },
-      { name: 'george', company: 'reviewsllc' }
+      { name: 'george', company: 'reviewsllc' },
+      { name: 'John', company: 'rotten tomatoes' }
     ]);
     
     return request(app)
