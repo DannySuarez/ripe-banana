@@ -5,6 +5,7 @@ const app = require('../lib/app');
 const connect = require('../lib/utils/connect');
 const mongoose = require('mongoose');
 const Studio = require('../lib/models/Studio');
+const Film = require('../lib/models/Film');
 
 describe('app routes', () => {
   beforeAll(() => {
@@ -49,8 +50,11 @@ describe('app routes', () => {
       });
   });
 
-  it('can get studio by an ID', async(){
-    
-  })
+  // it('can get studio by an ID', async() => {
+  //   const studio = await Studio.create([
+  //     { name: 'silly studio' }
+  //   ]);
+  //   const 
+  // })
 
 });
