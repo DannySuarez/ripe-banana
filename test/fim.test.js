@@ -89,10 +89,6 @@ describe('app routes', () => {
           }
 
         }]);
-        
-        // film.forEach(film => {
-        //   expect(res.body).toContainEqual({ film: film.title, studio: studio._id, released: 1999, cast: [{ role: 'main', actor: actors[0]._id }, { role: 'main', actor: actors[1]._id }] });
-        // });
       });
   });
 
