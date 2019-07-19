@@ -51,7 +51,7 @@ describe('app routes', () => {
         ]
       })
       .then((res => {
-        console.log(res.body);
+        // console.log(res.body);
         
         expect(res.body).toEqual({
           _id: expect.any(String),
@@ -61,12 +61,12 @@ describe('app routes', () => {
           cast: [{
             _id: expect.any(String),
             role: 'main',
-            actor: actors[0]._id.toString()
+            actor: actors[0]._id
           },
           { 
             _id: expect.any(String),
             role: 'main',
-            actor: actors[1]._id.toString()
+            actor: actors[1]._id
           }],
           __v: 0
         });
