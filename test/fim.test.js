@@ -87,10 +87,8 @@ describe('app routes', () => {
             _id: studio._id,
             name: studio.name
           }
-
         }]);
       });
   });
-
 
 });
