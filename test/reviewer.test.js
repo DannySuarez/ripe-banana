@@ -19,7 +19,7 @@ describe('app routes', () => {
     return mongoose.connection.close();
   });
 
-  it('can create a review', () => {
+  it('can create a reviewer', () => {
     return request(app)
       .post('/api/v1/reviewer')
       .send({ name: 'Danny', company: 'Self' })
