@@ -50,6 +50,8 @@ describe('app routes', () => {
         film: film._id
       })
       .then((res => {
+        console.log(res.body);
+        
         expect(res.body).toEqual({
           _id: expect.any(String),
           rating: 1,
@@ -91,17 +93,7 @@ describe('app routes', () => {
     return request(app)
       .get('/api/v1/reviews')
       .then(res => {
-        console.log(res.body[0]);
-        
-        expect(res.body[0]).toEqual({
-          _id: expect.any(String),
-          rating: expect.any(Number),
-          review: expect.any(String),
-          film: {
-            _id: expect.any(String),
-            title: expect.any(String)
-          },
-        });
+        expect(res.body).toHaveLength(100);
       });
 
   });
