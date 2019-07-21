@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const Film = require('../lib/models/Film');
 const Actor = require('../lib/models/Actor');
 const Studio = require('../lib/models/Studio');
+const Reviewer = require('../lib/models/Reviewer');
+const Review = require('../lib/models/Review');
 
 describe('app routes', () => {
   beforeAll(() => {
@@ -20,6 +22,8 @@ describe('app routes', () => {
   let actors = null;
   let studio = null;
   let film = null;
+  let reviewer = null;
+  let review = null;
   beforeEach(async() => {
     actors = JSON.parse(JSON.stringify(await Actor.create([{ name: 'Ryan Gosling' }, { name: 'Brad Pitt' }])));
     studio = JSON.parse(JSON.stringify(await Studio.create({ name: 'studio one',  })));
@@ -28,6 +32,13 @@ describe('app routes', () => {
       studio: studio._id, 
       released: 1999, 
       cast: [{ role: 'main', actor: actors[0]._id }, { role: 'main', actor: actors[1]._id }]
+    })));
+    reviewer = JSON.parse(JSON.stringify(await Reviewer.create({ name: 'danny', company: 'dannyllc' })));
+    review = JSON.parse(JSON.stringify(await Review.create({ 
+      rating: 1,
+      reviewer: reviewer._id,
+      review: 'meh',
+      film: film._id
     })));
   });
 
@@ -50,9 +61,7 @@ describe('app routes', () => {
           }
         ]
       })
-      .then((res => {
-        // console.log(res.body);
-        
+      .then((res => {        
         expect(res.body).toEqual({
           _id: expect.any(String),
           title: 'a movie',
@@ -77,8 +86,6 @@ describe('app routes', () => {
     return request(app)
       .get('/api/v1/films')
       .then(res => {
-        // console.log(res.body); 
-        // console.log(film);
         expect(res.body).toEqual([{ 
           _id: expect.any(String),
           title: 'Fight Club',
@@ -88,6 +95,49 @@ describe('app routes', () => {
             name: studio.name
           }
         }]);
+      });
+  });
+
+  it('can get film by ID', () => {
+    return request(app)
+      .get(`/api/v1/films/${film._id}`)
+      .then(res => {
+        console.log(res.body);
+        
+        expect(res.body).toEqual({
+          _id: film._id,
+          title: 'Fight Club',
+          released: film.released,
+          studio: {
+            _id: studio._id,
+            name: studio.name
+          },
+          cast: [{
+            _id: expect.any(String),
+            role: film.cast[0].role,
+            actor: {
+              _id: actors[0]._id,
+              name: actors[0].name
+            }
+          },
+          {
+            _id: expect.any(String),
+            role: film.cast[1].role,
+            actor: {
+              _id: actors[1]._id,
+              name: actors[1].name
+            }
+          }],
+          reviews: [{
+            _id: review._id,
+            rating: 1,
+            review: 'meh',
+            reviewer: {
+              _id: reviewer._id,
+              name: reviewer.name
+            }
+          }]
+        });
       });
   });
 
