@@ -49,9 +49,7 @@ describe('app routes', () => {
         review: 'not good',
         film: film._id
       })
-      .then((res => {
-        console.log(res.body);
-        
+      .then((res => {        
         expect(res.body).toEqual({
           _id: expect.any(String),
           rating: 1,
