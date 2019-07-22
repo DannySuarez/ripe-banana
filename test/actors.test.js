@@ -116,4 +116,33 @@ describe('app routes', () => {
       });
   });
 
+  it('cannot delete actor who is in films', async() => {
+    const studio = await Studio.create({
+      name: 'A Cool Studio'
+    });
+    
+    const actor = await Actor.create({
+      name: 'cool actor'
+    });
+
+    await Film.create({
+      title: 'Some cool movie',
+      studio: studio._id,
+      released: 2004,
+      cast: [{
+        role: 'lead',
+        actor: actor._id
+      }]
+    });
+
+    return request(app)
+      .delete(`/api/v1/actors/${actor._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          message: 'This Actor can not be deleted'
+        });
+      });
+  });
+
+
 });
