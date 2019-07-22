@@ -139,4 +139,29 @@ describe('app routes', () => {
       });
   });
 
+  it('deletes a film by id', async() => {
+    return request(app)
+      .delete(`/api/v1/films/${film._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          title: 'Fight Club',
+          studio: studio._id,
+          released: 1999,
+          cast: [{
+            role: 'main',
+            actor: actors[0]._id,
+            _id: expect.any(String)
+          },
+          {
+            role: 'main',
+            actor: actors[1]._id,
+            _id: expect.any(String)
+          }
+          ]
+        });
+      });
+  });
+
 });
