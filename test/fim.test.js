@@ -101,9 +101,7 @@ describe('app routes', () => {
   it('can get film by ID', () => {
     return request(app)
       .get(`/api/v1/films/${film._id}`)
-      .then(res => {
-        console.log(res.body);
-        
+      .then(res => {        
         expect(res.body).toEqual({
           _id: film._id,
           title: 'Fight Club',

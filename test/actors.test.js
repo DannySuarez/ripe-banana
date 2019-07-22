@@ -97,4 +97,23 @@ describe('app routes', () => {
       }));
   });
 
+  it('updates an actor', async() => {
+    const actor = await Actor.create({
+      name: 'Ben Affleck'
+    });
+
+    return request(app)
+      .put(`/api/v1/actors/${actor._id}`)
+      .send({      
+        name: 'Matt Damon'
+      })
+      .then(res => {        
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          name: 'Matt Damon'
+        });
+      });
+  });
+
 });
