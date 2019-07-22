@@ -83,4 +83,33 @@ describe('app routes', () => {
       }));
   });
 
+  it('cannot delete a studio with films', async() => {
+    const studio = await Studio.create({
+      name: 'My cool studio'
+    });
+
+    const actor = await Actor.create({
+      name: 'Antonio Banderas',
+    });
+
+    await Film.create({ 
+      title: 'The Mask of Zoro',
+      studio: studio._id,
+      released: 1998,
+      cast: [{
+        role: 'lead',
+        actor: actor._id
+      }]
+    });
+
+    return request(app)
+      .delete(`/api/v1/studios/${studio._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          message: 'This Studio Cannot Be Deleted'
+        });
+      });
+  });
+
+
 });
